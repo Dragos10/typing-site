@@ -1,0 +1,60 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    max-width: 100%;
+}
+
+#nameList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#nameList li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+}
+
+#nameInput {
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.state-thanks {
+    background-color: lightblue;
+}
+
+.state-love {
+    background-color: lightcoral;
+}
+
+.state-god {
+    background-color: lightgoldenrodyellow;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.state-zeus {
+    background-color: lightcyan;
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
