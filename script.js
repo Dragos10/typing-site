@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentStateIndex = 0;
     let lastEnteredName = '';
     let lastEnteredState = 0;
+    let nameCounter = 0;
 
     nameInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
@@ -34,9 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function addNameToList(name, stateIndex) {
+        nameCounter++;
         const li = document.createElement('li');
-        li.textContent = formatName(name, stateIndex);
+        li.textContent = `${nameCounter}. ${formatName(name, stateIndex)}`;
         li.className = getClassNameForState(stateIndex);
+        li.dataset.name = name; // Store the original name without emojis
+        li.dataset.stateIndex = stateIndex; // Store the state index for later use
         nameList.appendChild(li);
 
         if (nameList.children.length > 10) {
@@ -47,10 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function removeLastNameFromList() {
         if (nameList.children.length > 0) {
             const lastLi = nameList.lastChild;
-            nameInput.value = lastLi.textContent.replace(/^[^\w\s]/, '').trim();  // Removing prefix emojis and setting the value
-            currentStateIndex = states.indexOf(getStateFromClassName(lastLi.className));
+            nameInput.value = lastLi.dataset.name;  // Retrieve the original name without emojis
+            currentStateIndex = parseInt(lastLi.dataset.stateIndex, 10);
             updateInputState();
             nameList.removeChild(lastLi);
+            nameCounter--;
+            updateListNumbers();
+        }
+    }
+
+    function updateListNumbers() {
+        const items = nameList.children;
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            item.textContent = `${i + 1}. ${formatName(item.dataset.name, item.dataset.stateIndex)}`;
         }
     }
 
@@ -81,21 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return 'state-zeus';
             default:
                 return '';
-        }
-    }
-
-    function getStateFromClassName(className) {
-        switch (className) {
-            case 'state-thanks':
-                return 'thanks';
-            case 'state-love':
-                return 'love you';
-            case 'state-god':
-                return 'god';
-            case 'state-zeus':
-                return 'zeus';
-            default:
-                return 'normal';
         }
     }
 
