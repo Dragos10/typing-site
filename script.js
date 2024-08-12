@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             currentStateIndex = (currentStateIndex + 1) % states.length;
             updateInputState();
+        } else if (event.key === 'Backspace' && nameInput.value.trim() === '') {
+            event.preventDefault();
+            removeLastNameFromList();
         }
     });
 
@@ -38,6 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (nameList.children.length > 10) {
             nameList.removeChild(nameList.firstChild);
+        }
+    }
+
+    function removeLastNameFromList() {
+        if (nameList.children.length > 0) {
+            const lastLi = nameList.lastChild;
+            nameInput.value = lastLi.textContent.replace(/^[^\w\s]/, '').trim();  // Removing prefix emojis and setting the value
+            currentStateIndex = states.indexOf(getStateFromClassName(lastLi.className));
+            updateInputState();
+            nameList.removeChild(lastLi);
         }
     }
 
@@ -68,6 +81,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 return 'state-zeus';
             default:
                 return '';
+        }
+    }
+
+    function getStateFromClassName(className) {
+        switch (className) {
+            case 'state-thanks':
+                return 'thanks';
+            case 'state-love':
+                return 'love you';
+            case 'state-god':
+                return 'god';
+            case 'state-zeus':
+                return 'zeus';
+            default:
+                return 'normal';
         }
     }
 
